@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salesforce Data 360 Simplification -- Annie Saraceno</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500&family=Rethink+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #FAFBFC;
+      --text-primary: #1A1A2E;
+      --text-secondary: #3D2E4A;
+      --accent: #6E5070;
+      --border: #D0C4DC;
+      --stat-bg: #B5E8D5;
+      --color-stat-accent: #82BCC4;
+      --tile-problem-bg: #E8C4B4;
+      --tile-problem-text: #4A2418;
+      --header-height: 60px;
+      --eyebrow-bar-height: 2.5rem;
+      --font-heading: 'Rethink Sans', sans-serif;
+      --font-body: 'Instrument Sans', sans-serif;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    /* ── Nav ── */
+    nav {
+      background: var(--accent);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-name {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 1rem;
+      color: #fff;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 0.9375rem;
+      color: rgba(255, 255, 255, 0.85);
+      text-decoration: none;
+      padding: 0.3rem 0.875rem;
+      border-radius: 999px;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus {
+      color: #fff;
+    }
+
+    .nav-links a[aria-current="page"] {
+      background: #fff;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* ── Layout container ── */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ── Shared label style (small caps treatment) ── */
+    .label {
+      display: block;
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .footer-copy {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 0.75rem;
+      color: var(--accent);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-links a {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 0.75rem;
+      color: var(--text-primary);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .footer-links a:hover {
+      color: var(--text-secondary);
+    }
+
+    /* ── Page frame ── */
+    body {
+      font-size: 1.125rem; /* 18px */
+    }
+
+    .container {
+      max-width: 700px;
+    }
+
+    /* ── Page header ── */
+    .cs-header {
+      padding: 4rem 0 3.5rem;
+    }
+
+    .cs-header h1 {
+      font-family: var(--font-heading);
+      font-weight: 500;
+      font-size: 3.5rem; /* 56px */
+      line-height: 1.15;
+      color: var(--text-primary);
+    }
+
+    /* ── Chapter shell ── */
+    .chapter {
+      padding-top: 3.5rem;
+      padding-bottom: 5rem;
+    }
+
+    .chapter-eyebrow {
+      font-size: 0.8125rem; /* 13px */
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+
+    .chapter-rule {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+      width: 100vw;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    main {
+      overflow-x: clip; /* clips vw-based breakouts without creating a scroll container (preserves sticky) */
+    }
+
+    /* ── Chapter eyebrow bar (sticky) ── */
+    .chapter-bar {
+      position: sticky;
+      top: var(--header-height);
+      z-index: 90;
+      background: var(--bg);
+      /* extend to cover full container width including its padding */
+      margin-left: -2rem;
+      margin-right: -2rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
+      padding-top: 0.5rem;
+      margin-bottom: 3rem;
+    }
+
+    /* Full-viewport-width background so breakout content can't peek through */
+    .chapter-bar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100vw;
+      background: var(--bg);
+      z-index: -1;
+    }
+
+    /* ── Jump-link targets: clear both sticky bars ── */
+    #h-shared-standard,
+    #h-steel-thread,
+    #h-executable,
+    #link-shared-standard,
+    #link-steel-thread,
+    #link-executable {
+      scroll-margin-top: calc(var(--header-height) + var(--eyebrow-bar-height) + 1rem);
+    }
+
+    /* ~96px between H3 sections */
+    .chapter > section + section {
+      margin-top: 6rem;
+    }
+
+    /* ── H2 section titles ── */
+    .chapter h2 {
+      font-family: var(--font-heading);
+      font-weight: 500;
+      font-size: 2rem; /* 32px */
+      color: var(--text-primary);
+      margin-bottom: 1.25rem;
+    }
+
+    /* ── Body paragraphs ── */
+    .chapter p {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    .chapter p + p {
+      margin-top: 1.5rem; /* 24px */
+    }
+
+    /* ── Stat blocks ── */
+    .stat-blocks {
+      display: flex;
+      gap: 1rem;
+      margin: 1.75rem 0;
+    }
+
+    .stat-block {
+      flex: 1;
+      background: var(--stat-bg);
+      border-radius: 12px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+
+    .stat-block .stat-number {
+      display: block;
+      font-family: var(--font-heading);
+      font-weight: 500;
+      font-size: 2.5rem; /* ~40px — scoped to beat .chapter p specificity */
+      line-height: 1.1;
+      color: var(--text-primary);
+      margin-bottom: 0.2rem;
+    }
+
+    .stat-block .stat-label {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      line-height: 1.3;
+      color: var(--text-primary);
+    }
+
+    /* ── Overview table (breakout, 3-column) ── */
+    .overview-table {
+      width: 1000px;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      border-collapse: collapse;
+      table-layout: fixed;
+      margin-top: 2rem;
+    }
+
+    .overview-table th {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 0.8125rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-align: left;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: bottom;
+    }
+
+    .overview-table th:first-child {
+      width: 25%;
+    }
+
+    .overview-table th:nth-child(2) {
+      width: 37.5%;
+    }
+
+    .overview-table tbody tr {
+      border-top: 1px solid var(--border);
+    }
+
+    .overview-table td {
+      padding: 2rem 0;
+      vertical-align: top;
+      font-size: 1rem;
+      line-height: 1.65;
+      color: var(--text-primary);
+    }
+
+    .overview-table td:first-child {
+      padding-right: 2.5rem;
+    }
+
+    .overview-table td:nth-child(2) {
+      padding-right: 2.5rem;
+    }
+
+    .overview-table td a {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 1.25rem;
+      line-height: 1.3;
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .overview-table td a:hover,
+    .overview-table td a:focus {
+      color: #5A3F5C;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* Prevent .chapter p + p margin from adding space inside stat cards */
+    .stat-block p + p {
+      margin-top: 0;
+    }
+
+    /* Problem tiles — terracotta treatment */
+    .stat-blocks--problem .stat-block {
+      background: var(--tile-problem-bg);
+    }
+
+    .stat-blocks--problem .stat-block .stat-number,
+    .stat-blocks--problem .stat-block .stat-label {
+      color: var(--tile-problem-text);
+    }
+
+    /* Solution hero stat */
+    .solution-hero {
+      background: var(--stat-bg);
+      border-radius: 12px;
+      padding: 3rem 2rem;
+      text-align: center;
+      margin: 1.75rem 0;
+    }
+
+    .solution-hero .solution-hero-number {
+      font-family: var(--font-heading);
+      font-weight: 500;
+      font-size: 3.25rem;
+      line-height: 1.1;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .solution-hero .solution-hero-arrow,
+    .impact-stat-block .impact-stat-arrow {
+      display: inline-block;
+      vertical-align: middle;
+      position: relative;
+      top: -0.1em;
+    }
+
+    .solution-hero .solution-hero-arrow svg,
+    .impact-stat-block .impact-stat-arrow svg {
+      display: block;
+    }
+
+    .solution-hero .solution-hero-caption {
+      font-size: 1rem;
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+
+    .solution-hero p + p {
+      margin-top: 0;
+    }
+
+    /* Hover-reveal arrow on table row links */
+    .work-table td a::after {
+      content: '\00a0↘';
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .work-table td a:hover::after,
+    .work-table td a:focus::after {
+      opacity: 1;
+    }
+
+    /* ── H3 subheadings (e.g. Process wins) ── */
+    .chapter h3 {
+      font-family: var(--font-heading);
+      font-weight: 500;
+      font-size: 1.25rem;
+      color: var(--text-primary);
+      margin-top: 2.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    /* ── Body lists ── */
+    .chapter ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .chapter ul li {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      padding-left: 1.25rem;
+      position: relative;
+    }
+
+    .chapter ul li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: var(--text-secondary);
+    }
+
+    .chapter ul li + li {
+      margin-top: 0.875rem;
+    }
+
+    /* ── Closing paragraph (extra space above) ── */
+    .chapter-closing {
+      margin-top: 3rem;
+    }
+
+    /* ── Impact stat block ── */
+    .impact-stat-block {
+      background: var(--stat-bg);
+      border-radius: 12px;
+      padding: 3rem 2rem;
+      text-align: center;
+      margin: 1.75rem 0;
+    }
+
+    .impact-stat-block .impact-stat-number {
+      font-family: var(--font-heading);
+      font-weight: 500;
+      font-size: 3.25rem;
+      line-height: 1.1;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+
+    .impact-stat-block .impact-stat-top-caption {
+      font-size: 1.125rem;
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+
+    .impact-stat-divider {
+      border: none;
+      border-top: 1px solid var(--color-stat-accent);
+      width: 80px;
+      margin: 1.5rem auto;
+    }
+
+    .impact-stat-block .impact-stat-secondary {
+      font-size: 1rem;
+      color: var(--text-primary);
+      line-height: 1.65;
+    }
+
+    .impact-stat-block p + p {
+      margin-top: 0;
+    }
+
+    /* ── Challenge callout (reusable) ── */
+    .challenge-callout {
+      border-left: 3px solid var(--accent);
+      background: color-mix(in srgb, var(--accent) 5%, transparent);
+      padding: 1.75rem;
+      margin: 2rem 0;
+    }
+
+    .challenge-callout .challenge-eyebrow {
+      display: block;
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .challenge-callout .challenge-heading {
+      font-family: var(--font-heading);
+      font-weight: 500;
+      font-size: 1.125rem;
+      color: var(--text-primary);
+      margin-top: 0;
+    }
+
+    .challenge-callout p + p {
+      margin-top: 1.25rem;
+    }
+
+    /* ── Case study images ── */
+    .cs-image,
+    .cs-figure {
+      margin: 2rem 0;
+    }
+
+    .cs-image img,
+    .cs-images-pair img,
+    .cs-figure img {
+      display: block;
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 0 0 1px var(--border);
+    }
+
+    .cs-image--breakout,
+    .cs-figure--breakout {
+      width: 1000px;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .cs-figure figcaption {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-top: 0.625rem;
+      opacity: 0.8;
+    }
+
+    /* Before/after image pair — breakout width, side by side */
+    .cs-images-pair {
+      display: flex;
+      gap: 1.5rem;
+      margin: 2rem 0;
+      width: 1000px;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .cs-images-pair .cs-figure {
+      flex: 1;
+      min-width: 0;
+      margin: 0;
+    }
+
+    /* ── Mobile (≤ 768px) ── */
+    @media (max-width: 768px) {
+
+      /* Token overrides */
+      :root {
+        --eyebrow-bar-height: 2rem;
+      }
+
+      /* Nav */
+      .nav-links {
+        gap: 1.25rem;
+      }
+
+      /* Side margins */
+      .container {
+        padding: 0 1.5rem;
+      }
+
+      /* Chapter bar tracks narrower padding */
+      .chapter-bar {
+        margin-left: -1.5rem;
+        margin-right: -1.5rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        padding-top: 0.375rem;
+        margin-bottom: 2rem;
+      }
+
+      /* Type scale */
+      .cs-header h1 {
+        font-size: 2.25rem; /* 36px */
+      }
+
+      body {
+        font-size: 1.0625rem; /* 17px */
+      }
+
+      .chapter p,
+      .chapter ul li {
+        font-size: 1.0625rem;
+      }
+
+      .chapter h2 {
+        font-size: 1.625rem; /* 26px */
+      }
+
+      .chapter h3 {
+        font-size: 1.125rem; /* 18px */
+      }
+
+      /* Section spacing */
+      .chapter > section + section {
+        margin-top: 3.5rem; /* 56px */
+      }
+
+      /* Breakout images collapse to full column width */
+      .cs-image--breakout,
+      .cs-figure--breakout {
+        width: 100%;
+        position: static;
+        left: auto;
+        transform: none;
+      }
+
+      /* Before/after pair: undo breakout, stack vertically */
+      .cs-images-pair {
+        width: 100%;
+        position: static;
+        left: auto;
+        transform: none;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      /* Problem stat tiles stack */
+      .stat-blocks {
+        flex-direction: column;
+      }
+
+      /* Hero and impact stat number scale down */
+      .solution-hero .solution-hero-number,
+      .impact-stat-block .impact-stat-number {
+        font-size: 2.5rem; /* 40px */
+      }
+
+      /* Challenge callout — tighter padding */
+      .challenge-callout {
+        padding: 1.25rem;
+      }
+
+    }
+
+    /* ── The Team ── */
+    .team-note {
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-name">Annie Saraceno</a>
+      <ul class="nav-links">
+        <li><a href="index.html" aria-current="page">Work</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+
+      <!-- Page-level header -->
+      <header class="cs-header">
+        <h1>Salesforce Data 360 Simplification</h1>
+      </header>
+
+      <!-- Chapter 01: Overview -->
+      <section class="chapter" id="overview" aria-label="01 / Overview">
+        <div class="chapter-bar">
+          <span class="label chapter-eyebrow">01 / Overview</span>
+          <hr class="chapter-rule">
+        </div>
+
+        <section aria-labelledby="the-problem">
+          <h2 id="the-problem">The Problem</h2>
+          <p>Data 360's ease-of-use audit score was rated <strong>unacceptable</strong> across core workflows. Only a fraction of users could finish the tasks the product was built for, and getting there was slow.</p>
+          <div class="stat-blocks stat-blocks--problem">
+            <div class="stat-block">
+              <p class="stat-number">14.24%</p>
+              <p class="stat-label">Ease-of-use score</p>
+            </div>
+            <div class="stat-block">
+              <p class="stat-number">22%</p>
+              <p class="stat-label">Task completion on core workflow</p>
+            </div>
+            <div class="stat-block">
+              <p class="stat-number">8.4 min</p>
+              <p class="stat-label">Worst average load time on core feature</p>
+            </div>
+          </div>
+          <p>Our org's charter was to <strong>be bolder on simplicity</strong>. My job was to define what that actually meant across a complex, multi-team product, then make it stick.</p>
+        </section>
+
+        <section aria-labelledby="the-solution">
+          <h2 id="the-solution">The Solution</h2>
+          <p>Data 360 needed to get simpler across more feature areas and teams than any one designer could reach, so I led the work to define what "simple" meant and built the system that let teams apply it themselves.</p>
+          <div class="solution-hero">
+            <p class="solution-hero-number">22% <span class="solution-hero-arrow"><svg width="44" height="24" viewBox="0 0 44 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><line x1="0" y1="12" x2="32" y2="12" stroke="#82BCC4" stroke-width="3" stroke-linecap="round"/><polyline points="24,3 37,12 24,21" stroke="#82BCC4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span> 86%</p>
+            <p class="solution-hero-caption">Task completion on the core ingest-to-activate workflow in usability testing</p>
+          </div>
+          <table class="overview-table">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">What I Did</th>
+                <th scope="col">Impact</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="#link-shared-standard">Defined what &#x2018;simple&#x2019; actually means</a></td>
+                <td>Six experience principles and a three-level simplicity scale that gave product, design, and engineering the same basis for any user-facing decision</td>
+                <td>Adopted org-wide as the criteria for evaluating user-facing work</td>
+              </tr>
+              <tr>
+                <td><a href="#link-steel-thread">Wrote and prototyped a steel thread</a></td>
+                <td>An end-to-end narrative that turned the principles into a specific product experience, following two personas with opposite needs</td>
+                <td>Informed pattern guidelines and enablement materials, gave the org a concrete picture of &#x2018;simple&#x2019; to work towards</td>
+              </tr>
+              <tr>
+                <td><a href="#link-executable">Enabled teams to build simpler experiences</a></td>
+                <td>Enablement site, pattern guidelines, and AI evaluation tooling</td>
+                <td>Task completion on the core tested workflow went from <strong>22% to 86%</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section aria-labelledby="the-team">
+          <h2 id="the-team">The Team</h2>
+          <p class="team-note"><em>Partners from strategy through delivery</em></p>
+          <p><strong>Core collaborators:</strong> Director of Product Management &middot; Lead UX Designer &middot; Principal Researcher &middot; Principal CX Designer &middot; Engineering Architect</p>
+          <p><strong>Key stakeholders:</strong> SVP of Product Management, VP of UX</p>
+        </section>
+
+      </section>
+
+      <!-- Chapter 02: The work -->
+      <section class="chapter" id="the-work" aria-label="02 / The work">
+        <div class="chapter-bar">
+          <span class="label chapter-eyebrow">02 / The work</span>
+          <hr class="chapter-rule">
+        </div>
+
+        <!-- Section 1: Made simplicity a shared standard -->
+        <section id="link-shared-standard" aria-labelledby="h-shared-standard">
+          <h2 id="h-shared-standard">Made simplicity a shared standard</h2>
+          <p>Before this work, "simpler" was a matter of opinion. Every team had a reasonable case for why their feature needed one more option, and no one had a basis for saying no. The first problem wasn't UI, it was that no one agreed on what "simple" meant. I helped facilitate a three-day onsite, and soon after we defined two complementary frameworks.</p>
+          <p>Six experience principles, written to function as integrated decision criteria. The core idea was "Simple by default, power on demand." Each principle had to do real work at a design tension point, which meant drafting and debating them until they were specific enough to settle an argument.</p>
+          <div class="cs-image cs-image--breakout">
+            <img src="images/case-studies/d360-simplification/experience-principles.png" alt="Six experience principles diagram">
+          </div>
+          <p>A three-level simplicity scale, for products that legitimately need to serve both a marketing ops lead on day one and a data engineer with 40 segments in flight. The answer wasn't a toggle between basic and advanced modes, it was a ladder of control: L1 for speed and confidence through smart defaults, L2 for guided options surfaced by recommendation, L3 for full control. The scale's key move was insisting L1, not L3, should be every user's default experience, and that moving between levels should feel like a choice rather than a trap.</p>
+          <div class="cs-image cs-image--breakout">
+            <img src="images/case-studies/d360-simplification/simplicity-scale.png" alt="Three-level simplicity scale diagram">
+          </div>
+          <p>Together the principles and simplicity scale gave product, design, and engineering the same basis for any user-facing decision, which is what turned simplicity from a preference into a standard.</p>
+        </section>
+
+        <!-- Section 2: Wrote and prototyped a steel thread -->
+        <section id="link-steel-thread" aria-labelledby="h-steel-thread">
+          <h2 id="h-steel-thread">Wrote and prototyped a steel thread</h2>
+          <p>We needed to show what a simplified experience actually felt like end to end, for the users the product was failing most. Writing it out was also the first real test of the frameworks: a principle that sounds right in a doc can fall apart the moment it meets an actual workflow.</p>
+          <p>The narrative followed two personas with opposite needs: Amy, a non-technical marketing ops lead, and her data architect Seth. Every step paired what the user sees with what the system is doing, the principle it activates, its simplicity level, and the research behind it. If the frameworks could hold for both users, they could hold anywhere.</p>
+          <div class="challenge-callout">
+            <p class="challenge-eyebrow">CHALLENGE</p>
+            <p class="challenge-heading">Complexity compounded in two directions</p>
+            <p>The steel thread accumulated stakeholder input until it drifted from the simple vision it started with. At the same time, a parallel workstream was diverging into overlapping UI. Neither had a clear owner.</p>
+            <p>I named the drift plainly enough to pull the narrative back toward its original boldness, and proposed a hub-and-spoke model that framed each workstream's contribution so teams could move without waiting for top-down direction.</p>
+          </div>
+          <p>The thread ran the full ingest-to-activate journey: pull data into Data 360, map and model it, build a segment, and activate it for marketing. The old experience made users assemble each stage by hand across scattered tabs, in product-specific terms no one arrived already knowing. I redesigned it around recommendation: the system reads what it can already see, proposes a path through each stage, and lets users review and adjust instead of building from nothing.</p>
+          <div class="cs-images-pair">
+            <figure class="cs-figure">
+              <img src="images/case-studies/d360-simplification/steel-thread-before.png" alt="Before: old ingest-to-activate flow">
+              <figcaption>Before: One step of the old ingest-to-activate flow, spread across tabs, in product-specific jargon that even data engineers had to learn from scratch</figcaption>
+            </figure>
+            <figure class="cs-figure">
+              <img src="images/case-studies/d360-simplification/steel-thread-after.png" alt="Prototype: redesigned flow with system recommendations">
+              <figcaption>Prototype: The system proposes a starting point based on what it can already see. Users review and adjust instead of building from nothing.</figcaption>
+            </figure>
+          </div>
+          <p>Testing on this prototype, plus research from parallel simplification work, became the basis for the pattern guidelines and enablement materials. The narrative made the argument; the patterns made it executable.</p>
+        </section>
+
+        <!-- Section 3: Made the framework executable -->
+        <section id="link-executable" aria-labelledby="h-executable">
+          <h2 id="h-executable">Made the framework executable</h2>
+          <p>One designer can't cover six feature areas, and rigid specs would have broken across the range of workflows and personas our teams had to support. The answer was to build the system other teams execute against, not the screens.</p>
+          <div class="challenge-callout">
+            <p class="challenge-eyebrow">CHALLENGE</p>
+            <p class="challenge-heading">Principled enough to generalize, concrete enough to use</p>
+            <p>A framework abstract enough to apply across six feature areas risks being too vague for any team to act on. Make it concrete enough to act on and it stops being a system, just a spec for one feature.</p>
+            <p>I worked the framework from both ends: narrative to prototype to research-validated patterns, pulling toward the specific, then back out to what generalized. I resolved it by writing pattern guidelines for each level of the simplicity scale, concrete enough for teams to act on, structured enough to hold across the product.</p>
+          </div>
+          <p>My design partner and I vibe-coded an enablement microsite, which hosts our simplification framework and pattern guidelines built from the steel thread testing and parallel research.</p>
+          <figure class="cs-figure cs-figure--breakout">
+            <img src="images/case-studies/d360-simplification/enablement-site.png" alt="Enablement microsite screenshot">
+            <figcaption>The enablement microsite is a living, breathing single source of truth for the Data 360 product, UX, and engineering orgs.</figcaption>
+          </figure>
+          <p>I also authored evaluation tooling that scores any PRD or prototype against the framework, delivered through the tools teams already used: a Slackbot skill, an existing Claude skill for D360 simplification, and a Gemini Gem.</p>
+          <figure class="cs-figure cs-figure--breakout">
+            <img src="images/case-studies/d360-simplification/resources.png" alt="Resource slide from org-wide enablement session">
+            <figcaption>This resource slide from our org-wide enablement session highlights the tools and processes we made available to all teams.</figcaption>
+          </figure>
+        </section>
+
+      </section>
+
+      <!-- Chapter 03: The impact -->
+      <section class="chapter" id="the-impact" aria-label="03 / The impact">
+        <div class="chapter-bar">
+          <span class="label chapter-eyebrow">03 / The impact</span>
+          <hr class="chapter-rule">
+        </div>
+
+        <section aria-labelledby="h-what-changed">
+          <h2 id="h-what-changed">What changed</h2>
+
+          <div class="impact-stat-block">
+            <p class="impact-stat-number">22% <span class="impact-stat-arrow"><svg width="44" height="24" viewBox="0 0 44 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><line x1="0" y1="12" x2="32" y2="12" stroke="#82BCC4" stroke-width="3" stroke-linecap="round"/><polyline points="24,3 37,12 24,21" stroke="#82BCC4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span> 86%</p>
+            <p class="impact-stat-top-caption">Task completion on the core ingest-to-activate workflow</p>
+            <hr class="impact-stat-divider">
+            <p class="impact-stat-secondary"><strong>90% completion</strong> on new segmentation and activation flows</p>
+            <p class="impact-stat-secondary"><strong>94% completion</strong> on agent-ready data preparation flows</p>
+          </div>
+
+          <p>These improvements are a direct result of feature teams applying our simplification framework and pattern guidelines. Feedback from those teams flows back into the enablement materials.</p>
+
+          <h3>Process wins</h3>
+          <ul>
+            <li>Experience principles and simplification framework operationalized across the Data 360 product, design, and engineering org</li>
+            <li>Usability testing cycle shortened from ~4 weeks to 3 to 5 days, and scaled beyond the central team so testing before shipping is now a norm</li>
+            <li>Teams began blocking GA releases when new experiences didn't meet simplicity expectations. Three high-priority blockers were caught in the first release after the enablement materials shipped</li>
+          </ul>
+
+          <p class="chapter-closing">The framework now runs beyond the central team: dedicated pods are simplifying D360's highest-value workflows, all building on the same patterns, framework, and tools.</p>
+        </section>
+
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-copy">Annie Saraceno, 2026</span>
+      <div class="footer-links">
+        <a href="https://www.linkedin.com/in/annasaraceno/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="mailto:annasaraceno@gmail.com">annasaraceno@gmail.com</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

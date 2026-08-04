@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Annie Saraceno</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500&family=Rethink+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #FAFBFC;
+      --text-primary: #1A1A2E;
+      --text-secondary: #3D2E4A;
+      --accent: #6E5070;
+      --border: #D0C4DC;
+      --tile-bg: #F4F4F6;
+      --thumb-1: #82BCC4;
+      --thumb-2: #B5E8D5;
+      --font-heading: 'Rethink Sans', sans-serif;
+      --font-body: 'Instrument Sans', sans-serif;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    /* ── Nav ── */
+    nav {
+      background: var(--accent);
+    }
+
+    .nav-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-name {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 1rem;
+      color: #fff;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 0.9375rem;
+      color: rgba(255, 255, 255, 0.85);
+      text-decoration: none;
+      padding: 0.3rem 0.875rem;
+      border-radius: 999px;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus {
+      color: #fff;
+    }
+
+    .nav-links a[aria-current="page"] {
+      background: #fff;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* ── Layout containers ── */
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .container-wide {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ── Shared label style ── */
+    .label {
+      display: block;
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 4.5rem 0 1.5rem;
+    }
+
+    .hero-greeting {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 1.5rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+    }
+
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-weight: 500;
+      font-size: 2.5rem;
+      line-height: 1.2;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-intro {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 3rem;
+    }
+
+    .hero-intro a {
+      color: var(--text-primary);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .hero-intro a:hover {
+      color: var(--accent);
+    }
+
+    /* ── Timeline ── */
+    .timeline {
+      position: relative;
+      padding-bottom: 5rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: var(--line-top, 0);
+      left: 50%;
+      width: 4px;
+      margin-left: -2px;
+      height: var(--line-height, 100%);
+      background: var(--accent);
+    }
+
+    .company-group {
+      display: block;
+      margin-bottom: 4rem;
+    }
+
+    .company-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .company-label {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .company-name {
+      font-family: var(--font-heading);
+      font-weight: 500;
+      font-size: 1.5rem;
+      line-height: 1.2;
+      color: var(--text-primary);
+    }
+
+    .company-dates {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 0.6875rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .company-tiles {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    /* ── Tile ── */
+    .tile {
+      position: relative;
+      z-index: 1;
+      background: var(--tile-bg);
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+    }
+
+    .tile:hover {
+      border-width: 3px;
+      background: #EAEAED;
+    }
+
+    .tile-header {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      margin-bottom: 0.3rem;
+      flex-wrap: wrap;
+    }
+
+    .tile-eyebrow {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 0.6875rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      line-height: 1.4;
+    }
+
+    .tile-featured-badge {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 0.625rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: var(--thumb-2);
+      color: #0F2D22;
+      padding: 0.15rem 0.6rem;
+      border-radius: 999px;
+      white-space: nowrap;
+      line-height: 1.6;
+    }
+
+    .tile-title {
+      font-family: var(--font-heading);
+      font-weight: 500;
+      font-size: 1.125rem;
+      line-height: 1.35;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .tile-toggle {
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .tile-toggle:hover {
+      color: var(--text-secondary);
+    }
+
+    .tile-toggle-icon {
+      display: inline-flex;
+      align-items: center;
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+
+    .tile-toggle[aria-expanded="true"] .tile-toggle-icon {
+      transform: rotate(180deg);
+    }
+
+    /* ── Expanded tile body ── */
+    .tile-body {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .tile-bullets {
+      list-style: none;
+      margin: 0 0 1.25rem;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+    }
+
+    .tile-bullets li {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      padding-left: 1.125rem;
+      position: relative;
+    }
+
+    .tile-bullets li::before {
+      content: '▪';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.5rem;
+      top: 0.45em;
+    }
+
+    /* ── Image placeholder ── */
+    .tile-image-btn {
+      display: block;
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: zoom-in;
+      border-radius: 12px;
+      margin-bottom: 0.5rem;
+    }
+
+    .tile-image-btn:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 12px;
+    }
+
+    .tile-placeholder {
+      background: #C8C5C5;
+      border-radius: 12px;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      display: block;
+    }
+
+    .tile-caption {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      opacity: 0.75;
+      margin-bottom: 0.75rem;
+    }
+
+    .tile-case-study-link {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      margin-top: 0.25rem;
+    }
+
+    .tile-case-study-link:hover {
+      color: var(--text-secondary);
+    }
+
+    /* ── Timeline footer ── */
+    .timeline-footer {
+      position: relative;
+      z-index: 1;
+      padding: 2.5rem 0 0;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+    }
+
+    .timeline-footer a {
+      color: var(--text-primary);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .timeline-footer a:hover {
+      color: var(--accent);
+    }
+
+    /* ── Page footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      margin-top: 4rem;
+    }
+
+    .footer-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .footer-copy {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 0.75rem;
+      color: var(--accent);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-links a {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 0.75rem;
+      color: var(--text-primary);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .footer-links a:hover {
+      color: var(--text-secondary);
+    }
+
+    /* ── Lightbox ── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      padding: 2rem;
+    }
+
+    .lightbox[hidden] {
+      display: none;
+    }
+
+    .lightbox-inner {
+      position: relative;
+      max-width: 880px;
+      width: 100%;
+    }
+
+    .lightbox-placeholder {
+      background: #C8C5C5;
+      border-radius: 12px;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      display: block;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -2.75rem;
+      right: 0;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      line-height: 1;
+      font-family: var(--font-body);
+      opacity: 0.85;
+    }
+
+    .lightbox-close:hover {
+      opacity: 1;
+    }
+
+    .lightbox-close:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    /* ── Mobile (≤ 768px) ── */
+    @media (max-width: 768px) {
+      .nav-links {
+        gap: 0;
+      }
+
+      .nav-links a {
+        padding: 0.3rem 0.625rem;
+        font-size: 0.875rem;
+      }
+
+      .hero {
+        padding: 3rem 0 3rem;
+      }
+
+      .hero h1 {
+        font-size: 1.875rem;
+      }
+
+      .company-group {
+        margin-bottom: 3rem;
+      }
+
+      .company-label {
+        margin-bottom: 1rem;
+      }
+
+      .tile {
+        padding: 1rem 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-name">Annie Saraceno</a>
+      <ul class="nav-links">
+        <li><a href="index.html" aria-current="page">Work</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container-wide">
+
+      <section class="hero" aria-label="Introduction">
+        <p class="hero-greeting">Hi, I'm Annie.</p>
+        <h1>I untangle ambiguous, complex problems, then shape standards that outlast my involvement.</h1>
+      </section>
+
+    </div><!-- /.container-wide -->
+    <div class="container">
+
+      <p class="hero-intro">Below is a look at recent highlights, grouped by company.</p>
+
+      <section class="timeline" aria-label="Career highlights">
+
+        <!-- ── Salesforce ── -->
+        <div class="company-group">
+          <div class="company-label">
+            <h2 class="company-name">Salesforce</h2>
+            <span class="company-dates">2024 - current</span>
+          </div>
+
+          <div class="company-tiles">
+
+            <!-- Tile: Simplification (Featured) -->
+            <div class="tile">
+              <div class="tile-header">
+                <span class="tile-eyebrow">Design Lead &amp; Program Owner · 2026</span>
+                <span class="tile-featured-badge">Featured</span>
+              </div>
+              <h3 class="tile-title">Leading Data 360's org-wide simplification effort</h3>
+              <button class="tile-toggle" aria-expanded="false" aria-controls="tile-simplification-body">
+                <span class="tile-toggle-text">View highlights</span><span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </button>
+              <div class="tile-body" id="tile-simplification-body" hidden>
+                <ul class="tile-bullets">
+                  <li><strong>Design lead and program owner</strong> on a multi-team initiative to define what "simple" means across Data 360 and build the system for other teams to apply it</li>
+                  <li><strong>Built six experience principles and a three-level simplicity scale,</strong> then proved them out through an end-to-end prototype before turning them into pattern guidelines, an enablement site, and AI evaluation tooling</li>
+                  <li><strong>Task completion on the core workflow went from 22% to 86%.</strong> The framework now runs org-wide, with dedicated teams applying it to D360's highest-value workflows.</li>
+                </ul>
+                <button class="tile-image-btn" aria-label="View full-size image" data-tile="simplification">
+                  <div class="tile-placeholder" role="img" aria-label="Image placeholder"></div>
+                </button>
+                <p class="tile-caption">Caption under image</p>
+                <a href="case-study-data360.html" class="tile-case-study-link">Read the full case study &rarr;</a>
+              </div>
+            </div>
+
+            <!-- Tile: Monitoring -->
+            <div class="tile">
+              <div class="tile-header">
+                <span class="tile-eyebrow">Principal Designer · Current</span>
+              </div>
+              <h3 class="tile-title">Designing a unified monitoring experience for Data 360</h3>
+              <button class="tile-toggle" aria-expanded="false" aria-controls="tile-monitoring-body">
+                <span class="tile-toggle-text">View highlights</span><span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </button>
+              <div class="tile-body" id="tile-monitoring-body" hidden>
+                <ul class="tile-bullets">
+                  <li><strong>Principal designer owning the information architecture and vision for monitoring across Data 360,</strong> as both a dedicated destination and inline within key workflows</li>
+                  <li><strong>Defining a reusable design framework other feature teams can adopt,</strong> shifting the model from one team building every view to one team setting the standard</li>
+                  <li>Actively underway</li>
+                </ul>
+                <button class="tile-image-btn" aria-label="View full-size image" data-tile="monitoring">
+                  <div class="tile-placeholder" role="img" aria-label="Image placeholder"></div>
+                </button>
+                <p class="tile-caption">Caption under image</p>
+              </div>
+            </div>
+
+            <!-- Tile: AI-native patterns -->
+            <div class="tile">
+              <div class="tile-header">
+                <span class="tile-eyebrow">Principal Designer · 2025-2026</span>
+              </div>
+              <h3 class="tile-title">Defining Data 360's first AI-native design patterns</h3>
+              <button class="tile-toggle" aria-expanded="false" aria-controls="tile-ai-body">
+                <span class="tile-toggle-text">View highlights</span><span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </button>
+              <div class="tile-body" id="tile-ai-body" hidden>
+                <ul class="tile-bullets">
+                  <li><strong>Led design across several AI-native threads for Data 360 as agent-assisted workflows became a platform-wide priority,</strong> including a resizable agent panel with a drag-handle pattern for moving between focused and full-screen modes</li>
+                  <li><strong>Designed and prototyped a natural-language-to-plan experience that lets users complete core workflows through agent guidance instead of manual tab-hopping,</strong> tested with real users, with insights now shaping ongoing platform patterns</li>
+                  <li><strong>An agentic data transform feature I designed was demoed at Dreamforce 2025.</strong> I also co-led a cross-company summit bringing together designers from four product areas to align on shared AI interaction patterns.</li>
+                </ul>
+                <button class="tile-image-btn" aria-label="View full-size image" data-tile="ai-patterns">
+                  <div class="tile-placeholder" role="img" aria-label="Image placeholder"></div>
+                </button>
+                <p class="tile-caption">Caption under image</p>
+              </div>
+            </div>
+
+          </div><!-- /.company-tiles -->
+        </div><!-- /.company-group Salesforce -->
+
+        <!-- ── Atlassian ── -->
+        <div class="company-group">
+          <div class="company-label">
+            <h2 class="company-name">Atlassian</h2>
+            <span class="company-dates">2018 - 2024</span>
+          </div>
+
+          <div class="company-tiles">
+
+            <!-- Tile: Design Manager -->
+            <div class="tile">
+              <div class="tile-header">
+                <span class="tile-eyebrow">Design Manager · 2024</span>
+              </div>
+              <h3 class="tile-title">Leading a design team through organizational change</h3>
+              <button class="tile-toggle" aria-expanded="false" aria-controls="tile-manager-body">
+                <span class="tile-toggle-text">View highlights</span><span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </button>
+              <div class="tile-body" id="tile-manager-body" hidden>
+                <ul class="tile-bullets">
+                  <li><strong>Managed a small team of product and content designers</strong> through org restructuring and high-visibility, high-pressure work</li>
+                  <li><strong>Coached an underperforming team member,</strong> diagnosing root causes and building a specific, actionable improvement plan that led to a measurably better performance rating</li>
+                  <li><strong>Prioritized psychological safety and team morale,</strong> keeping the team engaged and resilient through sustained change</li>
+                </ul>
+                <button class="tile-image-btn" aria-label="View full-size image" data-tile="manager">
+                  <div class="tile-placeholder" role="img" aria-label="Image placeholder"></div>
+                </button>
+                <p class="tile-caption">Caption under image</p>
+              </div>
+            </div>
+
+            <!-- Tile: Pricing -->
+            <div class="tile">
+              <div class="tile-header">
+                <span class="tile-eyebrow">Senior Designer &rarr; Product Manager · 2023-2024</span>
+              </div>
+              <h3 class="tile-title">Overhauling Trello's pricing, from designer to PM</h3>
+              <button class="tile-toggle" aria-expanded="false" aria-controls="tile-pricing-body">
+                <span class="tile-toggle-text">View highlights</span><span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </button>
+              <div class="tile-body" id="tile-pricing-body" hidden>
+                <ul class="tile-bullets">
+                  <li><strong>Started as design lead,</strong> transitioned into product manager about halfway through</li>
+                  <li><strong>Led a year-long cross-team effort to introduce a new pricing tier,</strong> restructure existing ones, and validate the changes through experimentation</li>
+                  <li><strong>Increased paid enabled users,</strong> lowered churn, and drove 18 press stories globally (ZDNET, VentureBeat)</li>
+                </ul>
+                <button class="tile-image-btn" aria-label="View full-size image" data-tile="pricing">
+                  <div class="tile-placeholder" role="img" aria-label="Image placeholder"></div>
+                </button>
+                <p class="tile-caption">Caption under image</p>
+              </div>
+            </div>
+
+            <!-- Tile: Sharing -->
+            <div class="tile">
+              <div class="tile-header">
+                <span class="tile-eyebrow">Product Manager · 2023</span>
+              </div>
+              <h3 class="tile-title">Reversing a decline in Trello's active users through better sharing</h3>
+              <button class="tile-toggle" aria-expanded="false" aria-controls="tile-sharing-body">
+                <span class="tile-toggle-text">View highlights</span><span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </button>
+              <div class="tile-body" id="tile-sharing-body" hidden>
+                <ul class="tile-bullets">
+                  <li><strong>Led as PM after data showed board sharing was a key driver of retention amid declining user growth</strong></li>
+                  <li><strong>Redesigned Trello's board-sharing and permissions experience,</strong> aligning with proven patterns across Atlassian's other products</li>
+                  <li><strong>Rolled out via phased internal release before shipping broadly;</strong> increased direct board shares, invite acceptance rates, and shares via link</li>
+                </ul>
+                <button class="tile-image-btn" aria-label="View full-size image" data-tile="sharing">
+                  <div class="tile-placeholder" role="img" aria-label="Image placeholder"></div>
+                </button>
+                <p class="tile-caption">Caption under image</p>
+              </div>
+            </div>
+
+            <!-- Tile: Enterprise research -->
+            <div class="tile">
+              <div class="tile-header">
+                <span class="tile-eyebrow">Senior Designer · 2020-2022</span>
+              </div>
+              <h3 class="tile-title">Building a year-long research partnership with Trello's top enterprise customers</h3>
+              <button class="tile-toggle" aria-expanded="false" aria-controls="tile-enterprise-body">
+                <span class="tile-toggle-text">View highlights</span><span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </button>
+              <div class="tile-body" id="tile-enterprise-body" hidden>
+                <ul class="tile-bullets">
+                  <li><strong>Design lead on Trello's Enterprise team;</strong> co-created "Make 6 Customers Ecstatic," a year-long partnership with six customers representing the full customer base</li>
+                  <li><strong>Tracked sentiment via biweekly surveys and monthly interviews;</strong> insights shaped the roadmap and were presented company-wide at a Trello town hall</li>
+                  <li><strong>Model was adopted by multiple other Atlassian teams;</strong> later presented on it at an internal PM conference</li>
+                </ul>
+                <button class="tile-image-btn" aria-label="View full-size image" data-tile="enterprise">
+                  <div class="tile-placeholder" role="img" aria-label="Image placeholder"></div>
+                </button>
+                <p class="tile-caption">Caption under image</p>
+              </div>
+            </div>
+
+          </div><!-- /.company-tiles -->
+        </div><!-- /.company-group Atlassian -->
+
+        <!-- ── Healthcare ── -->
+        <div class="company-group">
+          <div class="company-label">
+            <h2 class="company-name">Healthcare UX</h2>
+          </div>
+
+          <div class="company-tiles">
+
+            <!-- Tile: Springbuk -->
+            <div class="tile">
+              <div class="tile-header">
+                <span class="tile-eyebrow">Product Designer · 2017</span>
+              </div>
+              <h3 class="tile-title">Designing for a health intelligence platform</h3>
+              <button class="tile-toggle" aria-expanded="false" aria-controls="tile-springbuk-body">
+                <span class="tile-toggle-text">View highlights</span><span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </button>
+              <div class="tile-body" id="tile-springbuk-body" hidden>
+                <ul class="tile-bullets">
+                  <li><strong>Designed product features and data visualizations at Springbuk,</strong> helping employers surface cost-saving opportunities and health risks across their workforce</li>
+                  <li><strong>Added data visualizations to Springbuk Insights,</strong> turning trending claims and wellness data into clearer, more actionable views</li>
+                  <li><strong>Did early concept work for the Timeline feature,</strong> now one of the platform's core offerings for tracking the impact of health interventions over time</li>
+                </ul>
+                <button class="tile-image-btn" aria-label="View full-size image" data-tile="springbuk">
+                  <div class="tile-placeholder" role="img" aria-label="Image placeholder"></div>
+                </button>
+                <p class="tile-caption">Caption under image</p>
+              </div>
+            </div>
+
+            <!-- Tile: OurHealth -->
+            <div class="tile">
+              <div class="tile-header">
+                <span class="tile-eyebrow">Product Designer · 2016-2017</span>
+              </div>
+              <h3 class="tile-title">Rebuilding OurHealth's patient portal</h3>
+              <button class="tile-toggle" aria-expanded="false" aria-controls="tile-ourhealth-body">
+                <span class="tile-toggle-text">View highlights</span><span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </button>
+              <div class="tile-body" id="tile-ourhealth-body" hidden>
+                <ul class="tile-bullets">
+                  <li><strong>Found major pain points in the existing patient portal (confusing navigation, no self-serve actions) through user research,</strong> then partnered with a product strategist to re-envision the experience</li>
+                  <li><strong>Built the company's first patient personas</strong> through surveys and interviews to ground that redesign work</li>
+                  <li><strong>Helped ship self-serve scheduling and medication refills,</strong> reducing patients' need to call clinics directly</li>
+                </ul>
+                <button class="tile-image-btn" aria-label="View full-size image" data-tile="ourhealth">
+                  <div class="tile-placeholder" role="img" aria-label="Image placeholder"></div>
+                </button>
+                <p class="tile-caption">Caption under image</p>
+              </div>
+            </div>
+
+          </div><!-- /.company-tiles -->
+        </div><!-- /.company-group Healthcare -->
+
+        <p class="timeline-footer">Want to dig further back? <a href="https://www.linkedin.com/in/annasaraceno/" target="_blank" rel="noopener noreferrer">View my LinkedIn</a></p>
+
+      </section><!-- /.timeline -->
+
+    </div><!-- /.container (timeline) -->
+  </main>
+
+  <!-- Lightbox -->
+  <div
+    class="lightbox"
+    id="lightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Image enlarged view"
+    hidden
+  >
+    <div class="lightbox-inner">
+      <button class="lightbox-close" id="lightbox-close" aria-label="Close enlarged image">&times;</button>
+      <div class="lightbox-placeholder" role="img" aria-label="Enlarged image placeholder"></div>
+    </div>
+  </div>
+
+  <footer id="contact">
+    <div class="footer-inner">
+      <span class="footer-copy">Annie Saraceno, 2026</span>
+      <div class="footer-links">
+        <a href="https://www.linkedin.com/in/annasaraceno/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="mailto:annasaraceno@gmail.com">annasaraceno@gmail.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Timeline line measurement ──
+    function updateTimelineLine() {
+      var timeline = document.querySelector('.timeline');
+      var tiles = timeline.querySelectorAll('.tile');
+      if (!tiles.length) return;
+      var firstTile = tiles[0];
+      var lastTile = tiles[tiles.length - 1];
+      var timelineTop = timeline.getBoundingClientRect().top + window.scrollY;
+      var lineStart = firstTile.getBoundingClientRect().top + window.scrollY - timelineTop;
+      var lineEnd = lastTile.getBoundingClientRect().bottom + window.scrollY - timelineTop;
+      timeline.style.setProperty('--line-top', lineStart + 'px');
+      timeline.style.setProperty('--line-height', (lineEnd - lineStart) + 'px');
+    }
+    updateTimelineLine();
+    window.addEventListener('resize', updateTimelineLine);
+
+    // ── Accordion ──
+    document.querySelectorAll('.tile-toggle').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+        var contentId = btn.getAttribute('aria-controls');
+        var content = document.getElementById(contentId);
+        content.hidden = expanded;
+        btn.querySelector('.tile-toggle-text').textContent = expanded ? 'View highlights' : 'Hide highlights';
+        updateTimelineLine();
+      });
+    });
+
+    // ── Lightbox ──
+    var lightbox = document.getElementById('lightbox');
+    var lightboxClose = document.getElementById('lightbox-close');
+    var lastFocused = null;
+
+    document.querySelectorAll('.tile-image-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        lastFocused = btn;
+        lightbox.removeAttribute('hidden');
+        lightboxClose.focus();
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.setAttribute('hidden', '');
+      if (lastFocused) lastFocused.focus();
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+
+    lightbox.addEventListener('click', function(e) {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && !lightbox.hasAttribute('hidden')) closeLightbox();
+    });
+  </script>
+
+</body>
+</html>
