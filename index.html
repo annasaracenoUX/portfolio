@@ -365,6 +365,7 @@
       width: 100%;
       aspect-ratio: 16 / 9;
       display: block;
+      object-fit: cover;
     }
 
     .tile-caption {
@@ -482,6 +483,19 @@
       display: block;
     }
 
+    .lightbox-image {
+      width: 100%;
+      max-height: 80vh;
+      border-radius: 12px;
+      display: block;
+      object-fit: contain;
+    }
+
+    .lightbox-placeholder[hidden],
+    .lightbox-image[hidden] {
+      display: none;
+    }
+
     .lightbox-close {
       position: absolute;
       top: -2.75rem;
@@ -580,7 +594,7 @@
             <!-- Tile: Simplification (Featured) -->
             <div class="tile">
               <div class="tile-header">
-                <span class="tile-eyebrow">Design Lead &amp; Program Owner · 2026</span>
+                <span class="tile-eyebrow">Principal Designer · 2026</span>
                 <span class="tile-featured-badge">Featured</span>
               </div>
               <h3 class="tile-title">Leading Data 360's org-wide simplification effort</h3>
@@ -589,14 +603,13 @@
               </button>
               <div class="tile-body" id="tile-simplification-body" hidden>
                 <ul class="tile-bullets">
-                  <li><strong>Design lead and program owner</strong> on a multi-team initiative to define what "simple" means across Data 360 and build the system for other teams to apply it</li>
-                  <li><strong>Built six experience principles and a three-level simplicity scale,</strong> then proved them out through an end-to-end prototype before turning them into pattern guidelines, an enablement site, and AI evaluation tooling</li>
+                  <li><strong>Design lead on a multi-team initiative</strong> to define what "simple" means across Data 360, and to build the system other teams could run with it</li>
+                  <li><strong>Authored six experience principles and a three-level simplicity framework,</strong> then proved them out through an end-to-end prototype before turning them into pattern guidelines, enablement resources, and AI tooling</li>
                   <li><strong>Task completion on the core workflow went from 22% to 86%.</strong> The framework now runs org-wide, with dedicated teams applying it to D360's highest-value workflows.</li>
                 </ul>
                 <button class="tile-image-btn" aria-label="View full-size image" data-tile="simplification">
-                  <div class="tile-placeholder" role="img" aria-label="Image placeholder"></div>
+                  <img class="tile-placeholder" src="images/case-studies/d360-simplification/experience-principles.png" alt="Experience principles">
                 </button>
-                <p class="tile-caption">Caption under image</p>
                 <a href="case-study-data360.html" class="tile-case-study-link">Read the full case study &rarr;</a>
               </div>
             </div>
@@ -821,7 +834,8 @@
   >
     <div class="lightbox-inner">
       <button class="lightbox-close" id="lightbox-close" aria-label="Close enlarged image">&times;</button>
-      <div class="lightbox-placeholder" role="img" aria-label="Enlarged image placeholder"></div>
+      <img class="lightbox-image" id="lightbox-image" alt="" hidden>
+      <div class="lightbox-placeholder" id="lightbox-placeholder" role="img" aria-label="Enlarged image placeholder"></div>
     </div>
   </div>
 
@@ -868,11 +882,23 @@
     // ── Lightbox ──
     var lightbox = document.getElementById('lightbox');
     var lightboxClose = document.getElementById('lightbox-close');
+    var lightboxImage = document.getElementById('lightbox-image');
+    var lightboxPlaceholder = document.getElementById('lightbox-placeholder');
     var lastFocused = null;
 
     document.querySelectorAll('.tile-image-btn').forEach(function(btn) {
       btn.addEventListener('click', function() {
         lastFocused = btn;
+        var thumb = btn.querySelector('img');
+        if (thumb) {
+          lightboxImage.src = thumb.src;
+          lightboxImage.alt = thumb.alt;
+          lightboxImage.hidden = false;
+          lightboxPlaceholder.hidden = true;
+        } else {
+          lightboxImage.hidden = true;
+          lightboxPlaceholder.hidden = false;
+        }
         lightbox.removeAttribute('hidden');
         lightboxClose.focus();
       });
