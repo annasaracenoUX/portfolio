@@ -15,15 +15,30 @@
     }
 
     :root {
-      --bg: #FAFBFC;
-      --text-primary: #1A1A2E;
-      --text-secondary: #3D2E4A;
-      --accent: #6E5070;
-      --border: #D0C4DC;
-      --stat-bg: #B5E8D5;
-      --color-stat-accent: #82BCC4;
-      --tile-problem-bg: #E8C4B4;
-      --tile-problem-text: #4A2418;
+      /* Palette */
+      --cream: #FBF6EE;
+      --charcoal: #1A1A1A;
+      --coral: #E8776B;
+      --violet: #B478E0;
+      --green: #5FBF7A;
+      --green-dark: #0C3A1A;
+      --gold: #F0C23C;
+      --gold-dark: #412402;
+      --blue: #5B8DEF;
+      --blue-dark: #14265E;
+      --orange: #E8963C;
+      --orange-dark: #452605;
+
+      /* Semantic */
+      --bg: var(--cream);
+      --text-primary: var(--charcoal);
+      --text-secondary: rgba(26, 26, 26, 0.72);
+      --border: var(--charcoal);
+      --label-accent: var(--gold-dark);
+      --stat-bg: color-mix(in srgb, var(--gold) 18%, var(--cream));
+      --color-stat-accent: var(--charcoal);
+      --tile-problem-bg: color-mix(in srgb, var(--charcoal) 6%, var(--cream));
+      --tile-problem-text: var(--charcoal);
       --header-height: 60px;
       --eyebrow-bar-height: 2.5rem;
       --font-heading: 'Rethink Sans', sans-serif;
@@ -44,14 +59,15 @@
     }
 
     :focus-visible {
-      outline: 2px solid var(--accent);
+      outline: 2px solid var(--charcoal);
       outline-offset: 3px;
       border-radius: 2px;
     }
 
     /* ── Nav ── */
     nav {
-      background: var(--accent);
+      background: var(--cream);
+      border-bottom: 2px solid var(--charcoal);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -71,7 +87,7 @@
       font-family: var(--font-heading);
       font-weight: 600;
       font-size: 1rem;
-      color: #fff;
+      color: var(--charcoal);
       text-decoration: none;
       white-space: nowrap;
     }
@@ -87,21 +103,26 @@
       font-family: var(--font-body);
       font-weight: 400;
       font-size: 0.9375rem;
-      color: rgba(255, 255, 255, 0.85);
+      color: var(--charcoal);
       text-decoration: none;
-      padding: 0.3rem 0.875rem;
-      border-radius: 999px;
+      padding: 0.25rem 0.75rem;
+      border-radius: 8px;
     }
 
     .nav-links a:hover,
     .nav-links a:focus {
-      color: #fff;
+      text-decoration: underline;
     }
 
     .nav-links a[aria-current="page"] {
-      background: #fff;
-      color: var(--accent);
+      background: var(--green);
+      color: var(--green-dark);
       font-weight: 500;
+    }
+
+    .nav-links a[aria-current="page"]:hover,
+    .nav-links a[aria-current="page"]:focus {
+      text-decoration: none;
     }
 
     /* ── Layout container ── */
@@ -119,7 +140,7 @@
       font-size: 0.6875rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: var(--label-accent);
     }
 
     /* ── Footer ── */
@@ -142,7 +163,7 @@
       font-family: var(--font-body);
       font-weight: 400;
       font-size: 0.75rem;
-      color: var(--accent);
+      color: var(--charcoal);
     }
 
     .footer-links {
@@ -324,7 +345,7 @@
       font-size: 0.8125rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: var(--label-accent);
       text-align: left;
       padding-bottom: 1rem;
       border-bottom: 1px solid var(--border);
@@ -364,13 +385,13 @@
       font-weight: 600;
       font-size: 1.25rem;
       line-height: 1.3;
-      color: var(--accent);
+      color: var(--charcoal);
       text-decoration: none;
     }
 
     .overview-table td a:hover,
     .overview-table td a:focus {
-      color: #5A3F5C;
+      color: var(--charcoal);
       text-decoration: underline;
       text-underline-offset: 3px;
     }
@@ -528,8 +549,8 @@
 
     /* ── Challenge callout (reusable) ── */
     .challenge-callout {
-      border-left: 3px solid var(--accent);
-      background: color-mix(in srgb, var(--accent) 5%, transparent);
+      border-left: 3px solid var(--charcoal);
+      background: color-mix(in srgb, var(--charcoal) 5%, transparent);
       padding: 1.75rem;
       margin: 2rem 0;
     }
@@ -541,7 +562,7 @@
       font-size: 0.6875rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: var(--label-accent);
       margin-bottom: 0.5rem;
     }
 
@@ -755,7 +776,7 @@
           <h2 id="the-solution">The Solution</h2>
           <p>Data 360 needed to get simpler across more feature areas and teams than any one designer could reach, so I led the work to define what "simple" meant and built the system that let teams apply it themselves.</p>
           <div class="solution-hero">
-            <p class="solution-hero-number">22% <span class="solution-hero-arrow"><svg width="44" height="24" viewBox="0 0 44 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><line x1="0" y1="12" x2="32" y2="12" stroke="#82BCC4" stroke-width="3" stroke-linecap="round"/><polyline points="24,3 37,12 24,21" stroke="#82BCC4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span> 86%</p>
+            <p class="solution-hero-number">22% <span class="solution-hero-arrow"><svg width="44" height="24" viewBox="0 0 44 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><line x1="0" y1="12" x2="32" y2="12" stroke="#1A1A1A" stroke-width="3" stroke-linecap="round"/><polyline points="24,3 37,12 24,21" stroke="#1A1A1A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span> 86%</p>
             <p class="solution-hero-caption">Task completion on the core ingest-to-activate workflow in usability testing</p>
           </div>
           <table class="overview-table">
@@ -877,7 +898,7 @@
           <h2 id="h-what-changed">What changed</h2>
 
           <div class="impact-stat-block">
-            <p class="impact-stat-number">22% <span class="impact-stat-arrow"><svg width="44" height="24" viewBox="0 0 44 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><line x1="0" y1="12" x2="32" y2="12" stroke="#82BCC4" stroke-width="3" stroke-linecap="round"/><polyline points="24,3 37,12 24,21" stroke="#82BCC4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span> 86%</p>
+            <p class="impact-stat-number">22% <span class="impact-stat-arrow"><svg width="44" height="24" viewBox="0 0 44 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><line x1="0" y1="12" x2="32" y2="12" stroke="#1A1A1A" stroke-width="3" stroke-linecap="round"/><polyline points="24,3 37,12 24,21" stroke="#1A1A1A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span> 86%</p>
             <p class="impact-stat-top-caption">Task completion on the core ingest-to-activate workflow</p>
             <hr class="impact-stat-divider">
             <p class="impact-stat-secondary"><strong>90% completion</strong> on new segmentation and activation flows</p>

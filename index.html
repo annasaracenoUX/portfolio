@@ -15,14 +15,27 @@
     }
 
     :root {
-      --bg: #FAFBFC;
-      --text-primary: #1A1A2E;
-      --text-secondary: #3D2E4A;
-      --accent: #6E5070;
-      --border: #D0C4DC;
-      --tile-bg: #F4F4F6;
-      --thumb-1: #82BCC4;
-      --thumb-2: #B5E8D5;
+      /* Palette */
+      --cream: #FBF6EE;
+      --charcoal: #1A1A1A;
+      --coral: #E8776B;
+      --violet: #B478E0;
+      --green: #5FBF7A;
+      --green-dark: #0C3A1A;
+      --gold: #F0C23C;
+      --gold-dark: #412402;
+      --blue: #5B8DEF;
+      --blue-dark: #14265E;
+      --orange: #E8963C;
+      --orange-dark: #452605;
+
+      /* Semantic */
+      --bg: var(--cream);
+      --text-primary: var(--charcoal);
+      --text-secondary: rgba(26, 26, 26, 0.72);
+      --accent: var(--charcoal);
+      --border: var(--charcoal);
+      --tile-bg: #FFFFFF;
       --font-heading: 'Rethink Sans', sans-serif;
       --font-body: 'Instrument Sans', sans-serif;
     }
@@ -48,7 +61,8 @@
 
     /* ── Nav ── */
     nav {
-      background: var(--accent);
+      background: var(--cream);
+      border-bottom: 2px solid var(--charcoal);
     }
 
     .nav-inner {
@@ -65,7 +79,7 @@
       font-family: var(--font-heading);
       font-weight: 600;
       font-size: 1rem;
-      color: #fff;
+      color: var(--charcoal);
       text-decoration: none;
       white-space: nowrap;
     }
@@ -81,21 +95,26 @@
       font-family: var(--font-body);
       font-weight: 400;
       font-size: 0.9375rem;
-      color: rgba(255, 255, 255, 0.85);
+      color: var(--charcoal);
       text-decoration: none;
-      padding: 0.3rem 0.875rem;
-      border-radius: 999px;
+      padding: 0.25rem 0.75rem;
+      border-radius: 0;
     }
 
     .nav-links a:hover,
     .nav-links a:focus {
-      color: #fff;
+      text-decoration: underline;
     }
 
     .nav-links a[aria-current="page"] {
-      background: #fff;
-      color: var(--accent);
+      background: var(--green);
+      color: var(--green-dark);
       font-weight: 500;
+    }
+
+    .nav-links a[aria-current="page"]:hover,
+    .nav-links a[aria-current="page"]:focus {
+      text-decoration: none;
     }
 
     /* ── Layout containers ── */
@@ -131,7 +150,7 @@
       font-family: var(--font-body);
       font-weight: 400;
       font-size: 1.5rem;
-      color: var(--text-secondary);
+      color: var(--text-primary);
       margin-bottom: 0.75rem;
     }
 
@@ -139,7 +158,7 @@
       font-family: var(--font-heading);
       font-weight: 500;
       font-size: 2.5rem;
-      line-height: 1.2;
+      line-height: 1.4;
       color: var(--text-primary);
       margin-bottom: 1.5rem;
     }
@@ -148,7 +167,7 @@
       font-family: var(--font-body);
       font-weight: 400;
       font-size: 1rem;
-      color: var(--text-secondary);
+      color: var(--text-primary);
       line-height: 1.65;
       margin-bottom: 3rem;
     }
@@ -160,7 +179,24 @@
     }
 
     .hero-intro a:hover {
-      color: var(--accent);
+      color: var(--text-secondary);
+    }
+
+    .hl-coral,
+    .hl-violet {
+      color: var(--charcoal);
+      line-height: 1.15;
+      padding: 0 0.12em;
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+    }
+
+    .hl-coral {
+      background: var(--coral);
+    }
+
+    .hl-violet {
+      background: var(--violet);
     }
 
     /* ── Timeline ── */
@@ -231,41 +267,27 @@
       padding: 1.25rem 1.5rem;
     }
 
-    .tile:hover {
-      border-width: 3px;
-      background: #EAEAED;
-    }
-
     .tile-header {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 0.625rem;
       margin-bottom: 0.3rem;
       flex-wrap: wrap;
     }
 
     .tile-eyebrow {
+      display: inline-block;
       font-family: var(--font-body);
       font-weight: 500;
       font-size: 0.6875rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--accent);
+      background: var(--gold);
+      color: var(--gold-dark);
       line-height: 1.4;
-    }
-
-    .tile-featured-badge {
-      font-family: var(--font-body);
-      font-weight: 500;
-      font-size: 0.625rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      background: var(--thumb-2);
-      color: #0F2D22;
-      padding: 0.15rem 0.6rem;
-      border-radius: 999px;
-      white-space: nowrap;
-      line-height: 1.6;
+      padding: 0.15rem 0.5rem;
+      border-radius: 0;
     }
 
     .tile-title {
@@ -288,8 +310,7 @@
       display: inline-flex;
       align-items: center;
       gap: 0.25rem;
-      text-decoration: underline;
-      text-underline-offset: 2px;
+      text-decoration: none;
     }
 
     .tile-toggle:hover {
@@ -300,18 +321,17 @@
       display: inline-flex;
       align-items: center;
       flex-shrink: 0;
+      transform: rotate(-90deg);
       transition: transform 0.2s ease;
     }
 
     .tile-toggle[aria-expanded="true"] .tile-toggle-icon {
-      transform: rotate(180deg);
+      transform: rotate(0deg);
     }
 
     /* ── Expanded tile body ── */
     .tile-body {
       margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--border);
     }
 
     .tile-bullets {
@@ -326,10 +346,20 @@
     .tile-bullets li {
       font-family: var(--font-body);
       font-size: 0.9375rem;
-      color: var(--text-secondary);
+      color: var(--text-primary);
       line-height: 1.6;
       padding-left: 1.125rem;
       position: relative;
+    }
+
+    .tile-bullets li a {
+      color: var(--text-primary);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .tile-bullets li a:hover {
+      color: var(--text-secondary);
     }
 
     .tile-bullets li::before {
@@ -368,47 +398,19 @@
       object-fit: cover;
     }
 
-    .tile-caption {
-      font-family: var(--font-body);
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-      line-height: 1.5;
-      opacity: 0.75;
-      margin-bottom: 0.75rem;
-    }
-
     .tile-case-study-link {
       display: inline-block;
-      font-family: var(--font-body);
+      font-family: var(--font-heading);
+      font-weight: 600;
       font-size: 0.9375rem;
-      color: var(--accent);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      margin-top: 0.25rem;
+      color: var(--text-primary);
+      text-decoration: none;
+      white-space: nowrap;
+      margin-left: auto;
     }
 
     .tile-case-study-link:hover {
       color: var(--text-secondary);
-    }
-
-    /* ── Timeline footer ── */
-    .timeline-footer {
-      position: relative;
-      z-index: 1;
-      padding: 2.5rem 0 0;
-      font-family: var(--font-body);
-      font-size: 0.9375rem;
-      color: var(--text-secondary);
-    }
-
-    .timeline-footer a {
-      color: var(--text-primary);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-
-    .timeline-footer a:hover {
-      color: var(--accent);
     }
 
     /* ── Page footer ── */
@@ -572,18 +574,17 @@
 
       <section class="hero" aria-label="Introduction">
         <p class="hero-greeting">Hi, I'm Annie.</p>
-        <h1>I untangle ambiguous, complex problems, then shape standards that outlast my involvement.</h1>
+        <h1>I untangle <span class="hl-coral">ambiguous, complex</span> problems, then <span class="hl-violet">shape standards that outlast</span> my involvement.</h1>
+        <p class="hero-intro">Here are some recent career highlights. Find me on <a href="https://www.linkedin.com/in/annasaraceno/" target="_blank" rel="noopener noreferrer">LinkedIn</a> for my full history.</p>
       </section>
 
     </div><!-- /.container-wide -->
     <div class="container">
 
-      <p class="hero-intro">Below is a look at recent highlights, grouped by company.</p>
-
       <section class="timeline" aria-label="Career highlights">
 
         <!-- ── Salesforce ── -->
-        <div class="company-group">
+        <div class="company-group" data-company="salesforce">
           <div class="company-label">
             <h2 class="company-name">Salesforce</h2>
             <span class="company-dates">2024 - current</span>
@@ -595,11 +596,11 @@
             <div class="tile">
               <div class="tile-header">
                 <span class="tile-eyebrow">Principal Designer · 2026</span>
-                <span class="tile-featured-badge">Featured</span>
+                <a href="case-study-data360.html" class="tile-case-study-link">Case Study &rarr;</a>
               </div>
               <h3 class="tile-title">Leading Data 360's org-wide simplification effort</h3>
               <button class="tile-toggle" aria-expanded="false" aria-controls="tile-simplification-body">
-                <span class="tile-toggle-text">View highlights</span><span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="tile-toggle-text">View highlights</span>
               </button>
               <div class="tile-body" id="tile-simplification-body" hidden>
                 <ul class="tile-bullets">
@@ -610,7 +611,6 @@
                 <button class="tile-image-btn" aria-label="View full-size image" data-tile="simplification">
                   <img class="tile-placeholder" src="images/case-studies/d360-simplification/experience-principles.png" alt="Experience principles">
                 </button>
-                <a href="case-study-data360.html" class="tile-case-study-link">Read the full case study &rarr;</a>
               </div>
             </div>
 
@@ -621,7 +621,7 @@
               </div>
               <h3 class="tile-title">Designing a unified monitoring experience for Data 360</h3>
               <button class="tile-toggle" aria-expanded="false" aria-controls="tile-monitoring-body">
-                <span class="tile-toggle-text">View highlights</span><span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="tile-toggle-text">View highlights</span>
               </button>
               <div class="tile-body" id="tile-monitoring-body" hidden>
                 <ul class="tile-bullets">
@@ -629,10 +629,6 @@
                   <li><strong>Defining a reusable design framework other feature teams can adopt,</strong> shifting the model from one team building every view to one team setting the standard</li>
                   <li>Actively underway</li>
                 </ul>
-                <button class="tile-image-btn" aria-label="View full-size image" data-tile="monitoring">
-                  <div class="tile-placeholder" role="img" aria-label="Image placeholder"></div>
-                </button>
-                <p class="tile-caption">Caption under image</p>
               </div>
             </div>
 
@@ -643,18 +639,14 @@
               </div>
               <h3 class="tile-title">Defining Data 360's first AI-native design patterns</h3>
               <button class="tile-toggle" aria-expanded="false" aria-controls="tile-ai-body">
-                <span class="tile-toggle-text">View highlights</span><span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="tile-toggle-text">View highlights</span>
               </button>
               <div class="tile-body" id="tile-ai-body" hidden>
                 <ul class="tile-bullets">
-                  <li><strong>Led design across several AI-native threads for Data 360 as agent-assisted workflows became a platform-wide priority,</strong> including a resizable agent panel with a drag-handle pattern for moving between focused and full-screen modes</li>
+                  <li><strong>Led design across several AI-native threads for Data 360 as agent-assisted workflows became a platform-wide priority,</strong> accommodating for workflows that move between "deep" and "shallow" tasks</li>
                   <li><strong>Designed and prototyped a natural-language-to-plan experience that lets users complete core workflows through agent guidance instead of manual tab-hopping,</strong> tested with real users, with insights now shaping ongoing platform patterns</li>
                   <li><strong>An agentic data transform feature I designed was demoed at Dreamforce 2025.</strong> I also co-led a cross-company summit bringing together designers from four product areas to align on shared AI interaction patterns.</li>
                 </ul>
-                <button class="tile-image-btn" aria-label="View full-size image" data-tile="ai-patterns">
-                  <div class="tile-placeholder" role="img" aria-label="Image placeholder"></div>
-                </button>
-                <p class="tile-caption">Caption under image</p>
               </div>
             </div>
 
@@ -662,7 +654,7 @@
         </div><!-- /.company-group Salesforce -->
 
         <!-- ── Atlassian ── -->
-        <div class="company-group">
+        <div class="company-group" data-company="atlassian">
           <div class="company-label">
             <h2 class="company-name">Atlassian</h2>
             <span class="company-dates">2018 - 2024</span>
@@ -677,7 +669,7 @@
               </div>
               <h3 class="tile-title">Leading a design team through organizational change</h3>
               <button class="tile-toggle" aria-expanded="false" aria-controls="tile-manager-body">
-                <span class="tile-toggle-text">View highlights</span><span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="tile-toggle-text">View highlights</span>
               </button>
               <div class="tile-body" id="tile-manager-body" hidden>
                 <ul class="tile-bullets">
@@ -685,10 +677,6 @@
                   <li><strong>Coached an underperforming team member,</strong> diagnosing root causes and building a specific, actionable improvement plan that led to a measurably better performance rating</li>
                   <li><strong>Prioritized psychological safety and team morale,</strong> keeping the team engaged and resilient through sustained change</li>
                 </ul>
-                <button class="tile-image-btn" aria-label="View full-size image" data-tile="manager">
-                  <div class="tile-placeholder" role="img" aria-label="Image placeholder"></div>
-                </button>
-                <p class="tile-caption">Caption under image</p>
               </div>
             </div>
 
@@ -699,18 +687,14 @@
               </div>
               <h3 class="tile-title">Overhauling Trello's pricing, from designer to PM</h3>
               <button class="tile-toggle" aria-expanded="false" aria-controls="tile-pricing-body">
-                <span class="tile-toggle-text">View highlights</span><span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="tile-toggle-text">View highlights</span>
               </button>
               <div class="tile-body" id="tile-pricing-body" hidden>
                 <ul class="tile-bullets">
                   <li><strong>Started as design lead,</strong> transitioned into product manager about halfway through</li>
                   <li><strong>Led a year-long cross-team effort to introduce a new pricing tier,</strong> restructure existing ones, and validate the changes through experimentation</li>
-                  <li><strong>Increased paid enabled users,</strong> lowered churn, and drove 18 press stories globally (ZDNET, VentureBeat)</li>
+                  <li><strong>Increased paid enabled users,</strong> lowered churn, and drove 18 press stories globally (<a href="https://www.zdnet.com/article/trello-adds-new-free-features-introduces-new-tier-for-small-businesses/" target="_blank" rel="noopener noreferrer">ZDNET</a>, <a href="https://venturebeat.com/business/work-management-platform-trello-introduces-no-code-automation-features" target="_blank" rel="noopener noreferrer">VentureBeat</a>)</li>
                 </ul>
-                <button class="tile-image-btn" aria-label="View full-size image" data-tile="pricing">
-                  <div class="tile-placeholder" role="img" aria-label="Image placeholder"></div>
-                </button>
-                <p class="tile-caption">Caption under image</p>
               </div>
             </div>
 
@@ -721,7 +705,7 @@
               </div>
               <h3 class="tile-title">Reversing a decline in Trello's active users through better sharing</h3>
               <button class="tile-toggle" aria-expanded="false" aria-controls="tile-sharing-body">
-                <span class="tile-toggle-text">View highlights</span><span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="tile-toggle-text">View highlights</span>
               </button>
               <div class="tile-body" id="tile-sharing-body" hidden>
                 <ul class="tile-bullets">
@@ -729,10 +713,6 @@
                   <li><strong>Redesigned Trello's board-sharing and permissions experience,</strong> aligning with proven patterns across Atlassian's other products</li>
                   <li><strong>Rolled out via phased internal release before shipping broadly;</strong> increased direct board shares, invite acceptance rates, and shares via link</li>
                 </ul>
-                <button class="tile-image-btn" aria-label="View full-size image" data-tile="sharing">
-                  <div class="tile-placeholder" role="img" aria-label="Image placeholder"></div>
-                </button>
-                <p class="tile-caption">Caption under image</p>
               </div>
             </div>
 
@@ -743,7 +723,7 @@
               </div>
               <h3 class="tile-title">Building a year-long research partnership with Trello's top enterprise customers</h3>
               <button class="tile-toggle" aria-expanded="false" aria-controls="tile-enterprise-body">
-                <span class="tile-toggle-text">View highlights</span><span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="tile-toggle-text">View highlights</span>
               </button>
               <div class="tile-body" id="tile-enterprise-body" hidden>
                 <ul class="tile-bullets">
@@ -751,10 +731,6 @@
                   <li><strong>Tracked sentiment via biweekly surveys and monthly interviews;</strong> insights shaped the roadmap and were presented company-wide at a Trello town hall</li>
                   <li><strong>Model was adopted by multiple other Atlassian teams;</strong> later presented on it at an internal PM conference</li>
                 </ul>
-                <button class="tile-image-btn" aria-label="View full-size image" data-tile="enterprise">
-                  <div class="tile-placeholder" role="img" aria-label="Image placeholder"></div>
-                </button>
-                <p class="tile-caption">Caption under image</p>
               </div>
             </div>
 
@@ -762,7 +738,7 @@
         </div><!-- /.company-group Atlassian -->
 
         <!-- ── Healthcare ── -->
-        <div class="company-group">
+        <div class="company-group" data-company="healthcare">
           <div class="company-label">
             <h2 class="company-name">Healthcare UX</h2>
           </div>
@@ -776,7 +752,7 @@
               </div>
               <h3 class="tile-title">Designing for a health intelligence platform</h3>
               <button class="tile-toggle" aria-expanded="false" aria-controls="tile-springbuk-body">
-                <span class="tile-toggle-text">View highlights</span><span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="tile-toggle-text">View highlights</span>
               </button>
               <div class="tile-body" id="tile-springbuk-body" hidden>
                 <ul class="tile-bullets">
@@ -784,10 +760,6 @@
                   <li><strong>Added data visualizations to Springbuk Insights,</strong> turning trending claims and wellness data into clearer, more actionable views</li>
                   <li><strong>Did early concept work for the Timeline feature,</strong> now one of the platform's core offerings for tracking the impact of health interventions over time</li>
                 </ul>
-                <button class="tile-image-btn" aria-label="View full-size image" data-tile="springbuk">
-                  <div class="tile-placeholder" role="img" aria-label="Image placeholder"></div>
-                </button>
-                <p class="tile-caption">Caption under image</p>
               </div>
             </div>
 
@@ -798,7 +770,7 @@
               </div>
               <h3 class="tile-title">Rebuilding OurHealth's patient portal</h3>
               <button class="tile-toggle" aria-expanded="false" aria-controls="tile-ourhealth-body">
-                <span class="tile-toggle-text">View highlights</span><span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="tile-toggle-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,5 8,11 13,5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="tile-toggle-text">View highlights</span>
               </button>
               <div class="tile-body" id="tile-ourhealth-body" hidden>
                 <ul class="tile-bullets">
@@ -806,17 +778,11 @@
                   <li><strong>Built the company's first patient personas</strong> through surveys and interviews to ground that redesign work</li>
                   <li><strong>Helped ship self-serve scheduling and medication refills,</strong> reducing patients' need to call clinics directly</li>
                 </ul>
-                <button class="tile-image-btn" aria-label="View full-size image" data-tile="ourhealth">
-                  <div class="tile-placeholder" role="img" aria-label="Image placeholder"></div>
-                </button>
-                <p class="tile-caption">Caption under image</p>
               </div>
             </div>
 
           </div><!-- /.company-tiles -->
         </div><!-- /.company-group Healthcare -->
-
-        <p class="timeline-footer">Want to dig further back? <a href="https://www.linkedin.com/in/annasaraceno/" target="_blank" rel="noopener noreferrer">View my LinkedIn</a></p>
 
       </section><!-- /.timeline -->
 
