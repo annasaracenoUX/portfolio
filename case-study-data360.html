@@ -35,9 +35,9 @@
       --text-secondary: rgba(26, 26, 26, 0.72);
       --border: var(--charcoal);
       --label-accent: var(--gold-dark);
-      --stat-bg: color-mix(in srgb, var(--gold) 18%, var(--cream));
+      --stat-bg: var(--gold);
       --color-stat-accent: var(--charcoal);
-      --tile-problem-bg: color-mix(in srgb, var(--charcoal) 6%, var(--cream));
+      --tile-problem-bg: var(--coral);
       --tile-problem-text: var(--charcoal);
       --header-height: 60px;
       --eyebrow-bar-height: 2.5rem;
@@ -198,11 +198,44 @@
       padding: 4rem 0 3.5rem;
     }
 
+    .cs-back-link {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.875rem;
+      background: var(--green);
+      color: var(--green-dark);
+      text-decoration: none;
+      padding: 0.25rem 0.75rem;
+      border-radius: 0;
+      margin-bottom: 1.5rem;
+    }
+
+    .cs-back-link:hover {
+      text-decoration: underline;
+    }
+
     .cs-header h1 {
       font-family: var(--font-heading);
       font-weight: 500;
       font-size: 3.5rem; /* 56px */
       line-height: 1.15;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+    }
+
+    .cs-meta {
+      display: flex;
+      gap: 3rem;
+    }
+
+    .cs-meta-item .label {
+      margin-bottom: 0.375rem;
+    }
+
+    .cs-meta-value {
+      font-family: var(--font-body);
+      font-size: 1rem;
       color: var(--text-primary);
     }
 
@@ -287,7 +320,7 @@
     /* ── Body paragraphs ── */
     .chapter p {
       font-size: 1.125rem;
-      color: var(--text-secondary);
+      color: var(--text-primary);
       line-height: 1.65;
     }
 
@@ -453,14 +486,14 @@
     }
 
     /* Hover-reveal arrow on table row links */
-    .work-table td a::after {
+    .overview-table td a::after {
       content: '\00a0↘';
       opacity: 0;
       transition: opacity 0.2s ease;
     }
 
-    .work-table td a:hover::after,
-    .work-table td a:focus::after {
+    .overview-table td a:hover::after,
+    .overview-table td a:focus::after {
       opacity: 1;
     }
 
@@ -483,7 +516,7 @@
 
     .chapter ul li {
       font-size: 1.125rem;
-      color: var(--text-secondary);
+      color: var(--text-primary);
       line-height: 1.65;
       padding-left: 1.25rem;
       position: relative;
@@ -549,8 +582,8 @@
 
     /* ── Challenge callout (reusable) ── */
     .challenge-callout {
-      border-left: 3px solid var(--charcoal);
-      background: color-mix(in srgb, var(--charcoal) 5%, transparent);
+      border-left: 3px solid var(--blue);
+      background: color-mix(in srgb, var(--blue) 10%, transparent);
       padding: 1.75rem;
       margin: 2rem 0;
     }
@@ -562,7 +595,7 @@
       font-size: 0.6875rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--label-accent);
+      color: var(--text-primary);
       margin-bottom: 0.5rem;
     }
 
@@ -590,7 +623,22 @@
       display: block;
       width: 100%;
       border-radius: 12px;
-      box-shadow: 0 0 0 1px var(--border);
+    }
+
+    .cs-image-btn {
+      display: block;
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: zoom-in;
+      border-radius: 12px;
+    }
+
+    .cs-image-btn:focus-visible {
+      outline: 2px solid var(--charcoal);
+      outline-offset: 3px;
+      border-radius: 12px;
     }
 
     .cs-image--breakout,
@@ -700,6 +748,25 @@
         gap: 2rem;
       }
 
+      /* Overview table: undo breakout, let columns size naturally */
+      .overview-table {
+        width: 100%;
+        position: static;
+        left: auto;
+        transform: none;
+        table-layout: auto;
+      }
+
+      .overview-table th:first-child,
+      .overview-table th:nth-child(2) {
+        width: auto;
+      }
+
+      .overview-table td:first-child,
+      .overview-table td:nth-child(2) {
+        padding-right: 1.25rem;
+      }
+
       /* Problem stat tiles stack */
       .stat-blocks {
         flex-direction: column;
@@ -722,6 +789,70 @@
     .team-note {
       opacity: 0.6;
     }
+
+    /* ── Lightbox ── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      padding: 2rem;
+    }
+
+    .lightbox[hidden] {
+      display: none;
+    }
+
+    .lightbox-inner {
+      position: relative;
+      max-width: 880px;
+      width: 100%;
+    }
+
+    .lightbox-image {
+      width: 100%;
+      max-height: 80vh;
+      border-radius: 12px;
+      display: block;
+      object-fit: contain;
+    }
+
+    .lightbox-caption {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      color: #fff;
+      line-height: 1.5;
+      opacity: 0.85;
+      margin-top: 0.75rem;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -2.75rem;
+      right: 0;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      line-height: 1;
+      font-family: var(--font-body);
+      opacity: 0.85;
+    }
+
+    .lightbox-close:hover {
+      opacity: 1;
+    }
+
+    .lightbox-close:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
   </style>
 </head>
 <body>
@@ -730,9 +861,8 @@
     <div class="nav-inner">
       <a href="index.html" class="nav-name">Annie Saraceno</a>
       <ul class="nav-links">
-        <li><a href="index.html" aria-current="page">Work</a></li>
-        <li><a href="index.html#about">About</a></li>
-        <li><a href="index.html#contact">Contact</a></li>
+        <li><a href="index.html">Work</a></li>
+        <li><a href="get-in-touch.html">Get in touch</a></li>
       </ul>
     </div>
   </nav>
@@ -742,7 +872,18 @@
 
       <!-- Page-level header -->
       <header class="cs-header">
+        <a href="index.html" class="cs-back-link">&larr; Work</a>
         <h1>Salesforce Data 360 Simplification</h1>
+        <div class="cs-meta">
+          <div class="cs-meta-item">
+            <span class="label">Role</span>
+            <p class="cs-meta-value">Principal Designer</p>
+          </div>
+          <div class="cs-meta-item">
+            <span class="label">Timeline</span>
+            <p class="cs-meta-value">4 Months (March&ndash;June 2026)</p>
+          </div>
+        </div>
       </header>
 
       <!-- Chapter 01: Overview -->
@@ -810,7 +951,7 @@
         <section aria-labelledby="the-team">
           <h2 id="the-team">The Team</h2>
           <p class="team-note"><em>Partners from strategy through delivery</em></p>
-          <p><strong>Core collaborators:</strong> Director of Product Management &middot; Lead UX Designer &middot; Principal Researcher &middot; Principal CX Designer &middot; Engineering Architect</p>
+          <p><strong>Core collaborators:</strong> Director of Product Management, Lead UX Designer, Principal Researcher, Principal CX Designer, Engineering Architect</p>
           <p><strong>Key stakeholders:</strong> SVP of Product Management, VP of UX</p>
         </section>
 
@@ -827,11 +968,11 @@
         <section id="link-shared-standard" aria-labelledby="h-shared-standard">
           <h2 id="h-shared-standard">Made simplicity a shared standard</h2>
           <p>Before this work, "simpler" was a matter of opinion. Every team had a reasonable case for why their feature needed one more option, and no one had a basis for saying no. The first problem wasn't UI, it was that no one agreed on what "simple" meant. I helped facilitate a three-day onsite, and soon after we defined two complementary frameworks.</p>
-          <p>Six experience principles, written to function as integrated decision criteria. The core idea was "Simple by default, power on demand." Each principle had to do real work at a design tension point, which meant drafting and debating them until they were specific enough to settle an argument.</p>
+          <p><strong>Six experience principles</strong>, written to function as integrated decision criteria. The core idea was "Simple by default, power on demand." Each principle had to do real work at a design tension point, which meant drafting and debating them until they were specific enough to settle an argument.</p>
           <div class="cs-image cs-image--breakout">
             <img src="images/case-studies/d360-simplification/experience-principles.png" alt="Six experience principles diagram">
           </div>
-          <p>A three-level simplicity scale, for products that legitimately need to serve both a marketing ops lead on day one and a data engineer with 40 segments in flight. The answer wasn't a toggle between basic and advanced modes, it was a ladder of control: L1 for speed and confidence through smart defaults, L2 for guided options surfaced by recommendation, L3 for full control. The scale's key move was insisting L1, not L3, should be every user's default experience, and that moving between levels should feel like a choice rather than a trap.</p>
+          <p><strong>A three-level simplicity scale</strong>, for products that legitimately need to serve both a marketing ops lead on day one and a data engineer with 40 segments in flight. The answer wasn't a toggle between basic and advanced modes, it was a ladder of control: L1 for speed and confidence through smart defaults, L2 for guided options surfaced by recommendation, L3 for full control. The scale's key move was insisting L1, not L3, should be every user's default experience.</p>
           <div class="cs-image cs-image--breakout">
             <img src="images/case-studies/d360-simplification/simplicity-scale.png" alt="Three-level simplicity scale diagram">
           </div>
@@ -852,12 +993,16 @@
           <p>The thread ran the full ingest-to-activate journey: pull data into Data 360, map and model it, build a segment, and activate it for marketing. The old experience made users assemble each stage by hand across scattered tabs, in product-specific terms no one arrived already knowing. I redesigned it around recommendation: the system reads what it can already see, proposes a path through each stage, and lets users review and adjust instead of building from nothing.</p>
           <div class="cs-images-pair">
             <figure class="cs-figure">
-              <img src="images/case-studies/d360-simplification/steel-thread-before.png" alt="Before: old ingest-to-activate flow">
-              <figcaption>Before: One step of the old ingest-to-activate flow, spread across tabs, in product-specific jargon that even data engineers had to learn from scratch</figcaption>
+              <button class="cs-image-btn" aria-label="View full-size image">
+                <img src="images/case-studies/d360-simplification/steel-thread-before.png" alt="Before: old ingest-to-activate flow">
+              </button>
+              <figcaption><strong>Before:</strong> One step of the old ingest-to-activate flow, spread across tabs, in product-specific jargon that even data engineers had to learn from scratch</figcaption>
             </figure>
             <figure class="cs-figure">
-              <img src="images/case-studies/d360-simplification/steel-thread-after.png" alt="Prototype: redesigned flow with system recommendations">
-              <figcaption>Prototype: The system proposes a starting point based on what it can already see. Users review and adjust instead of building from nothing.</figcaption>
+              <button class="cs-image-btn" aria-label="View full-size image">
+                <img src="images/case-studies/d360-simplification/steel-thread-after.png" alt="Prototype: redesigned flow with system recommendations">
+              </button>
+              <figcaption><strong>Prototype:</strong> The system proposes a starting point based on what it can already see. Users review and adjust instead of building from nothing.</figcaption>
             </figure>
           </div>
           <p>Testing on this prototype, plus research from parallel simplification work, became the basis for the pattern guidelines and enablement materials. The narrative made the argument; the patterns made it executable.</p>
@@ -931,6 +1076,65 @@
       </div>
     </div>
   </footer>
+
+  <!-- Lightbox -->
+  <div
+    class="lightbox"
+    id="lightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Image enlarged view"
+    hidden
+  >
+    <div class="lightbox-inner">
+      <button class="lightbox-close" id="lightbox-close" aria-label="Close enlarged image">&times;</button>
+      <img class="lightbox-image" id="lightbox-image" alt="">
+      <p class="lightbox-caption" id="lightbox-caption"></p>
+    </div>
+  </div>
+
+  <script>
+    // ── Lightbox ──
+    var lightbox = document.getElementById('lightbox');
+    var lightboxClose = document.getElementById('lightbox-close');
+    var lightboxImage = document.getElementById('lightbox-image');
+    var lightboxCaption = document.getElementById('lightbox-caption');
+    var lastFocused = null;
+
+    document.querySelectorAll('.cs-image-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        lastFocused = btn;
+        var img = btn.querySelector('img');
+        var figcaption = btn.closest('figure') ? btn.closest('figure').querySelector('figcaption') : null;
+        lightboxImage.src = img.src;
+        lightboxImage.alt = img.alt;
+        if (figcaption) {
+          lightboxCaption.innerHTML = figcaption.innerHTML;
+          lightboxCaption.hidden = false;
+        } else {
+          lightboxCaption.innerHTML = '';
+          lightboxCaption.hidden = true;
+        }
+        lightbox.removeAttribute('hidden');
+        lightboxClose.focus();
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.setAttribute('hidden', '');
+      if (lastFocused) lastFocused.focus();
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+
+    lightbox.addEventListener('click', function(e) {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && !lightbox.hasAttribute('hidden')) closeLightbox();
+    });
+  </script>
 
 </body>
 </html>
